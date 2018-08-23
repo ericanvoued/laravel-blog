@@ -15,7 +15,7 @@
 //
 //});
 
-Route::get('/index','IndexController@index');
+//Route::get('/index','IndexController@index');
 
 Route::get('/',function (){
     return view('welcome');
@@ -47,6 +47,8 @@ Route::group(['middleware'=>['web','admin.login'],'namespace'=>'Admin','prefix'=
 
     //修改密码
     Route::any('pass','IndexController@pass');
+
+    Route::resource('category','CategoryController');
 });
 
 
