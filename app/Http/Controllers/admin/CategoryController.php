@@ -6,42 +6,28 @@ use App\Http\Model\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\admin\CommonController;
+use Illuminate\Support\Facades\Input;
 
 class CategoryController extends CommonController
 {
     //get admin/category  全部分类
     public function index(){
-        $categorys = Category::all();
-        $data = $this->getTree($categorys);
-        return view('admin.list')->with('data',$data);
+        $categorys = (new Category)->tree();
+        return view('admin.list')->with('data',$categorys);
     }
 
-    //分类排序
-    public function getTree($data)
-    {
-        $arr = array();
-        foreach ($data as $k => $v){
-            if($v->cate_pid == 0){
-                $arr[] = $data[$k];
-                foreach ($data as $m => $n){
-                    if($n->cate_pid == $v->cate_id){
-                        $arr[] = $data[$m];
-                    }
-                }
-            }
-        }
-        return $arr;
-//        dd($arr);
-    }
 
-    //post admin/category
+    //post admin/category 添加分类提交
     public function store(){
-        echo 'store';
+
+        $input = Input::all();
+//        dd($input);
     }
 
     //get admin/category/create   添加分类
     public function create(){
-        echo 'create';
+        $data = Category::where('cate_pid',0)->get();
+        return view('admin.add',compact('data'));
     }
 
     //delete admin/category/{category}   删除单个分类
@@ -65,6 +51,26 @@ class CategoryController extends CommonController
     }
 
 
+    public function changeorder(){
+        $input = Input::all();
+//        dd($input['order']);
+        $cate = Category::find($input['cate_id']);
+        $cate->cate_order = $input['order'];
+        $res = $cate->update();
+        if ($res==1){
+            $data = [
+                'status'=>1,
+                'msg'=>'分类排序更新成功',
+            ];
+            return $data;
+        }else{
+            $data = [
+                'status'=>0,
+                'msg'=>'分类排序更新失败,请重试',
+            ];
+            return $data;
+        }
+    }
 
 
 }

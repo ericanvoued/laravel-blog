@@ -48,6 +48,9 @@ Route::group(['middleware'=>['web','admin.login'],'namespace'=>'Admin','prefix'=
     //修改密码
     Route::any('pass','IndexController@pass');
 
+    //修改排序接口
+    Route::post('/changeorder','CategoryController@changeorder');
+
     Route::resource('category','CategoryController');
 });
 
