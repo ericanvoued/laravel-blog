@@ -25,6 +25,21 @@
     <div class="result_wrap">
         <form action="{{url('admin/category')}}" method="post">
             {{csrf_field()}}
+
+            @if(count($errors)>0)
+                <div class="mark">
+                    @if(is_object($errors))
+                        @foreach($errors->all() as $error)
+                            <p>{{$error}}</p>
+                        @endforeach
+                    @else
+                        <p>{{$errors}}</p>
+                    @endif
+                </div>
+
+
+            @endif
+
             <table class="add_tab">
                 <tbody>
                 <tr>
@@ -41,7 +56,7 @@
                 <tr>
                     <th><i class="fa fa-exclamation-circle yellow"></i>分类名称：</th>
                     <td>
-                        <input type="text" name="caye_name">
+                        <input type="text" name="cate_name">
                         <span><i class="fa fa-exclamation-circle yellow"></i>分类名称必须填写</span>
                     </td>
                 </tr>
