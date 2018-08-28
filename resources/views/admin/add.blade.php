@@ -25,7 +25,6 @@
     <div class="result_wrap">
         <form action="{{url('admin/category')}}" method="post">
             {{csrf_field()}}
-
             @if(count($errors)>0)
                 <div class="mark">
                     @if(is_object($errors))
@@ -36,8 +35,6 @@
                         <p>{{$errors}}</p>
                     @endif
                 </div>
-
-
             @endif
 
             <table class="add_tab">
@@ -53,6 +50,7 @@
                         </select>
                     </td>
                 </tr>
+
                 <tr>
                     <th><i class="fa fa-exclamation-circle yellow"></i>分类名称：</th>
                     <td>
